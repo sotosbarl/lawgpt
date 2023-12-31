@@ -6,4 +6,3 @@ torch==1.10.0
 streamlit==1.7.0
 requests==2.26.0
 bardapi==0.1.0  
-pickle==0.0.11
