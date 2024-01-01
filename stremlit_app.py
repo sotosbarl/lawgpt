@@ -12,15 +12,18 @@ from bardapi import SESSION_HEADERS
 from bardapi import Bard
 import docx 
 import pickle
+import os
 
 token = credentials
-session = requests.Session()
-session.headers = SESSION_HEADERS
-session.cookies.set("__Secure-1PSID", token)
-session.cookies.set("__Secure-1PSIDTS","xxxxx")
-session.cookies.set("__Secure-1PSIDCC","xxxxx")
+bard = Bard(token=credentials)
 
-bard = Bard(token=token, session=session)
+# session = requests.Session()
+# session.headers = SESSION_HEADERS
+# session.cookies.set("__Secure-1PSID", token)
+# session.cookies.set("__Secure-1PSIDTS","xxxxx")
+# session.cookies.set("__Secure-1PSIDCC","xxxxx")
+
+# bard = Bard(token=token, session=session)
 
 
 # Define the multilingual model name
