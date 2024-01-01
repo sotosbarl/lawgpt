@@ -131,7 +131,7 @@ def main():
 
             you+= "ποια από τις παραπάνω αριθμημενες προτάσεις  μιλάει για " + user_input + ", απάντησε συγκεκριμενα, γράψε μου μόνο τη σωστη πρόταση"
             # you += "Τι λέει ο αστικος κωδικας για αυτο; χρησιμοποιησε τις παραπανω αριθμημενες προτασεις."
-            print(bard.get_answer(you)['content'])
+            # print(bard.get_answer(you)['content'])
                 # Your similarity calculation code
 
             st.write('Σχετικό άρθρο:')
@@ -139,7 +139,8 @@ def main():
                 
             #     st.write( f"Άρθρο: {top_three_indices[i]} {top_three_documents[i]}")
 
-            text = bard.get_answer(you)['content']
+            # text = bard.get_answer(you)['content']
+            text = "λαλαλ"
             st.write(text)
         else:
             st.warning('Please enter a word or phrase.')
