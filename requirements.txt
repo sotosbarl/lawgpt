@@ -1,8 +1,6 @@
 transformers==4.15.0
 scikit-learn==0.24.2
 numpy==1.21.5
-python-docx==0.8.11
 torch==1.10.0
 streamlit==1.7.0
-requests==2.26.0
-bardapi==0.1.33
+pickle

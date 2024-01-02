@@ -1,42 +1,21 @@
-from transformers import BertModel, BertTokenizer , pipeline, AutoModelForSeq2SeqLM
+from transformers import BertModel, BertTokenizer , pipeline
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
+import docx
 import torch
 import streamlit as st
+
+credentials = 'eQjhrIHk8r9W0cXxqs1tfBJIkb40gj_7xgNL2SsBs4-a6nOEUrxPbDvwGMpIbzxTePGSBw.'
+
+import requests
+from bardapi import SESSION_HEADERS
+from bardapi import Bard
+import docx 
 import pickle
+import os
 
-
-# HUGGING_FACE_API_KEY = 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
-
-# model_id = "lmsys/fastchat-t5-3b-v1.0"
-# filenames = [
-#         "pytorch_model.bin", "added_tokens.json", "config.json", "generation_config.json", 
-#         "special_tokens_map.json", "spiece.model", "tokenizer_config.json"
-# ]
-
-# for filename in filenames:
-#         downloaded_model_path = hf_hub_download(
-#                     repo_id=model_id,
-#                     filename=filename,
-#                     token=HUGGING_FACE_API_KEY
-#         )
-#         print(downloaded_model_path)
-
-
-# Use a pipeline as a high-level helper
-
-gpt_pipe = pipeline("text2text-generation", model="lmsys/fastchat-t5-3b-v1.0")
-
-
-
-# tokenizer = AutoTokenizer.from_pretrained(model_id, legacy=False)
-
-
-# gpt_tokenizer = AutoTokenizer.from_pretrained("lmsys/fastchat-t5-3b-v1.0")
-# gpt_model = AutoModelForSeq2SeqLM.from_pretrained("lmsys/fastchat-t5-3b-v1.0")
-
-
-
+token = credentials
+bard = Bard(token=credentials)
 
 # session = requests.Session()
 # session.headers = SESSION_HEADERS
@@ -166,8 +145,8 @@ def main():
             #     st.write( f"Άρθρο: {top_three_indices[i]} {top_three_documents[i]}")
 
             # text = bard.get_answer(you)['content']
-            # pipe = pipeline("text2text-generation", model=gpt_model)
-            x = gpt_pipe("Three movies of Morgan Freeman")
+            pipe = pipeline("text2text-generation")
+            x = pipe("question: What is 42 ? context: 42 is the answer to life, the universe and everything")
             st.write(x)
         else:
             st.warning('Please enter a word or phrase.')
