@@ -1,4 +1,4 @@
-from transformers import BertModel, BertTokenizer , pipeline, AutoModelForSeq2SeqLM
+from transformers import BertModel, BertTokenizer , pipeline, AutoModelForSeq2SeqLM, AutoTokenizer, AutoModelForQuestionAnswering
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import torch
