@@ -24,7 +24,7 @@ import pickle
 
 # Use a pipeline as a high-level helper
 
-gpt_pipe = pipeline("text2text-generation", model="lmsys/fastchat-t5-3b-v1.0")
+# gpt_pipe = pipeline("text2text-generation", model="lmsys/fastchat-t5-3b-v1.0")
 
 
 
@@ -166,8 +166,8 @@ def main():
 
             # text = bard.get_answer(you)['content']
             # pipe = pipeline("text2text-generation", model=gpt_model)
-            x = gpt_pipe("Three movies of Morgan Freeman")
-            st.write(x)
+            # x = gpt_pipe("Three movies of Morgan Freeman")
+            # st.write(x)
         else:
             st.warning('Please enter a word or phrase.')
 
