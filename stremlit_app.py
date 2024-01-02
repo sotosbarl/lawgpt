@@ -24,7 +24,7 @@ import pickle
 
 # Use a pipeline as a high-level helper
 
-# gpt_pipe = pipeline("text2text-generation", model="lmsys/fastchat-t5-3b-v1.0")
+qa_model = pipeline("question-answering", "timpal0l/mdeberta-v3-base-squad2")
 
 
 
@@ -154,20 +154,24 @@ def main():
             # pipe = pipeline(task, model=model_name)
 
 
-            you+= "ποια από τις παραπάνω αριθμημενες προτάσεις  μιλάει για " + user_input + ", απάντησε συγκεκριμενα, γράψε μου μόνο τη σωστη πρόταση"
+            # you+= "ποια από τις παραπάνω αριθμημενες προτάσεις  μιλάει για " + user_input + ", απάντησε συγκεκριμενα, γράψε μου μόνο τη σωστη πρόταση"
             # you += "Τι λέει ο αστικος κωδικας για αυτο; χρησιμοποιησε τις παραπανω αριθμημενες προτασεις."
             # print(bard.get_answer(you)['content'])
                 # Your similarity calculation code
             # text = pipe("once upon a time...")
             st.write('Σχετικό άρθρο:')
-            # for i in range(3):
-                
+
+            question = user_input
+            context = you
+            answer = qa_model(question = question, context = context)
+                    # for i in range(3):
+                        
             #     st.write( f"Άρθρο: {top_three_indices[i]} {top_three_documents[i]}")
 
             # text = bard.get_answer(you)['content']
             # pipe = pipeline("text2text-generation", model=gpt_model)
             # x = gpt_pipe("Three movies of Morgan Freeman")
-            # st.write(x)
+            st.write(answer)
         else:
             st.warning('Please enter a word or phrase.')
 
