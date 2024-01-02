@@ -1,21 +1,17 @@
-from transformers import BertModel, BertTokenizer
+from transformers import BertModel, BertTokenizer , pipeline
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import docx
 import torch
 import streamlit as st
 
-credentials = 'eQjhrIHk8r9W0cXxqs1tfBJIkb40gj_7xgNL2SsBs4-a6nOEUrxPbDvwGMpIbzxTePGSBw.'
 
 import requests
-from bardapi import SESSION_HEADERS
-from bardapi import Bard
+
 import docx 
 import pickle
 import os
 
-token = credentials
-bard = Bard(token=credentials)
 
 # session = requests.Session()
 # session.headers = SESSION_HEADERS
@@ -129,19 +125,25 @@ def main():
                 you += "\n"
 
 
+            # model_name = 'bert-base-multilingual-cased'  # Multilingual BERT model
+            # task = 'text2text-generation'
+            # pipe = pipeline(task, model=model_name)
+
+
             you+= "ποια από τις παραπάνω αριθμημενες προτάσεις  μιλάει για " + user_input + ", απάντησε συγκεκριμενα, γράψε μου μόνο τη σωστη πρόταση"
             # you += "Τι λέει ο αστικος κωδικας για αυτο; χρησιμοποιησε τις παραπανω αριθμημενες προτασεις."
             # print(bard.get_answer(you)['content'])
                 # Your similarity calculation code
-
+            # text = pipe("once upon a time...")
             st.write('Σχετικό άρθρο:')
             # for i in range(3):
                 
             #     st.write( f"Άρθρο: {top_three_indices[i]} {top_three_documents[i]}")
 
             # text = bard.get_answer(you)['content']
-            text = "λαλαλ"
-            st.write(text)
+            pipe = pipeline("text2text-generation")
+            x = pipe("question: What is 42 ? context: 42 is the answer to life, the universe and everything")
+            st.write(x)
         else:
             st.warning('Please enter a word or phrase.')
 
