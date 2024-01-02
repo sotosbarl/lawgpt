@@ -4,7 +4,29 @@ import numpy as np
 import docx
 import torch
 import streamlit as st
+import os
+from huggingface_hub import hf_hub_download
 
+# HUGGING_FACE_API_KEY = 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
+
+# model_id = "lmsys/fastchat-t5-3b-v1.0"
+# filenames = [
+#         "pytorch_model.bin", "added_tokens.json", "config.json", "generation_config.json", 
+#         "special_tokens_map.json", "spiece.model", "tokenizer_config.json"
+# ]
+
+# for filename in filenames:
+#         downloaded_model_path = hf_hub_download(
+#                     repo_id=model_id,
+#                     filename=filename,
+#                     token=HUGGING_FACE_API_KEY
+#         )
+#         print(downloaded_model_path)
+
+
+# Use a pipeline as a high-level helper
+
+gpt_pipe = pipeline("text2text-generation", model="lmsys/fastchat-t5-3b-v1.0")
 
 
 
@@ -149,8 +171,8 @@ def main():
             #     st.write( f"Άρθρο: {top_three_indices[i]} {top_three_documents[i]}")
 
             # text = bard.get_answer(you)['content']
-            pipe = pipeline("text2text-generation", model=gpt_model)
-            x = pipeline("Three movies of Morgan Freeman")
+            # pipe = pipeline("text2text-generation", model=gpt_model)
+            x = gpt_pipe("Three movies of Morgan Freeman")
             st.write(x)
         else:
             st.warning('Please enter a word or phrase.')
