@@ -24,8 +24,8 @@ import pickle
 
 # Use a pipeline as a high-level helper
 
-qa_model = pipeline("question-answering", "timpal0l/mdeberta-v3-base-squad2")
-
+# qa_model = pipeline("question-answering", "timpal0l/mdeberta-v3-base-squad2")
+pipe = pipeline("text2text-generation", model="google/flan-t5-base")
 
 
 # tokenizer = AutoTokenizer.from_pretrained(model_id, legacy=False)
@@ -163,7 +163,8 @@ def main():
 
             question = user_input
             context = you
-            answer = qa_model(question = question, context = context)
+            # answer = qa_model(question = question, context = context)
+            answer = pipe("hello, how are you?")
                     # for i in range(3):
                         
             #     st.write( f"Άρθρο: {top_three_indices[i]} {top_three_documents[i]}")
