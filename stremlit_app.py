@@ -3,6 +3,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import torch
 import streamlit as st
+import pickle
 
 # HUGGING_FACE_API_KEY = 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
 
