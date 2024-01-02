@@ -1,10 +1,18 @@
-from transformers import BertModel, BertTokenizer , pipeline
+from transformers import BertModel, BertTokenizer , pipeline, AutoModelForSeq2SeqLM
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import docx
 import torch
 import streamlit as st
 
+
+
+
+# tokenizer = AutoTokenizer.from_pretrained(model_id, legacy=False)
+
+
+# gpt_tokenizer = AutoTokenizer.from_pretrained("lmsys/fastchat-t5-3b-v1.0")
+gpt_model = AutoModelForSeq2SeqLM.from_pretrained("lmsys/fastchat-t5-3b-v1.0")
 
 import requests
 
@@ -141,8 +149,8 @@ def main():
             #     st.write( f"Άρθρο: {top_three_indices[i]} {top_three_documents[i]}")
 
             # text = bard.get_answer(you)['content']
-            pipe = pipeline("text2text-generation")
-            x = pipe("question: What is 42 ? context: 42 is the answer to life, the universe and everything")
+            pipe = pipeline("text2text-generation", model=gpt_model)
+            x = pipeline("Three movies of Morgan Freeman")
             st.write(x)
         else:
             st.warning('Please enter a word or phrase.')
