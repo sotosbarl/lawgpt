@@ -5,45 +5,6 @@ import torch
 import streamlit as st
 import pickle
 
-# HUGGING_FACE_API_KEY = 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
-
-# model_id = "lmsys/fastchat-t5-3b-v1.0"
-# filenames = [
-#         "pytorch_model.bin", "added_tokens.json", "config.json", "generation_config.json", 
-#         "special_tokens_map.json", "spiece.model", "tokenizer_config.json"
-# ]
-
-# for filename in filenames:
-#         downloaded_model_path = hf_hub_download(
-#                     repo_id=model_id,
-#                     filename=filename,
-#                     token=HUGGING_FACE_API_KEY
-#         )
-#         print(downloaded_model_path)
-
-
-# Use a pipeline as a high-level helper
-
-# qa_model = pipeline("question-answering", "timpal0l/mdeberta-v3-base-squad2")
-pipe = pipeline("text2text-generation", model="google/flan-t5-base")
-
-
-# tokenizer = AutoTokenizer.from_pretrained(model_id, legacy=False)
-
-
-# gpt_tokenizer = AutoTokenizer.from_pretrained("lmsys/fastchat-t5-3b-v1.0")
-# gpt_model = AutoModelForSeq2SeqLM.from_pretrained("lmsys/fastchat-t5-3b-v1.0")
-
-
-
-
-# session = requests.Session()
-# session.headers = SESSION_HEADERS
-# session.cookies.set("__Secure-1PSID", token)
-# session.cookies.set("__Secure-1PSIDTS","xxxxx")
-# session.cookies.set("__Secure-1PSIDCC","xxxxx")
-
-# bard = Bard(token=token, session=session)
 
 
 # Define the multilingual model name
@@ -149,30 +110,9 @@ def main():
                 you += "\n"
 
 
-            # model_name = 'bert-base-multilingual-cased'  # Multilingual BERT model
-            # task = 'text2text-generation'
-            # pipe = pipeline(task, model=model_name)
-
-
-            # you+= "ποια από τις παραπάνω αριθμημενες προτάσεις  μιλάει για " + user_input + ", απάντησε συγκεκριμενα, γράψε μου μόνο τη σωστη πρόταση"
-            # you += "Τι λέει ο αστικος κωδικας για αυτο; χρησιμοποιησε τις παραπανω αριθμημενες προτασεις."
-            # print(bard.get_answer(you)['content'])
-                # Your similarity calculation code
-            # text = pipe("once upon a time...")
             st.write('Σχετικό άρθρο:')
 
-            question = user_input
-            context = you
-            # answer = qa_model(question = question, context = context)
-            answer = pipe("hello, how are you?")
-                    # for i in range(3):
-                        
-            #     st.write( f"Άρθρο: {top_three_indices[i]} {top_three_documents[i]}")
-
-            # text = bard.get_answer(you)['content']
-            # pipe = pipeline("text2text-generation", model=gpt_model)
-            # x = gpt_pipe("Three movies of Morgan Freeman")
-            st.write(answer)
+            st.write(you)
         else:
             st.warning('Please enter a word or phrase.')
 
