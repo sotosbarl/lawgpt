@@ -2,6 +2,7 @@ import requests
 from transformers import  pipeline
 import time
 import pickle
+import streamlit as st
 
 API_URL = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2"
 headers = {"Authorization": "Bearer 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"}
