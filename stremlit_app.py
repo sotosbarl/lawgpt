@@ -70,16 +70,16 @@ if text:
 
 
     
-output = query({
-  "inputs": "Based on this info only:" + answer +" ,answer this question, by reasoning step by step:" + text,
-})
-
-if output:
-
-    translated_text2 = translator2.translate(out[0]['generated_text'])
-    st.text(output)
-
-    st.text(translated_text2)
-
-else:
-    print("Failed to get response from the model.")
+    output = query({
+      "inputs": "Based on this info only:" + answer +" ,answer this question, by reasoning step by step:" + text,
+    })
+    
+    if output:
+    
+        translated_text2 = translator2.translate(out[0]['generated_text'])
+        st.text(output)
+    
+        st.text(translated_text2)
+    
+    else:
+        print("Failed to get response from the model.")
