@@ -1,5 +1,5 @@
 import requests
-from transformers import  pipeline
+# from transformers import  pipeline
 import time
 import pickle
 import streamlit as st
@@ -8,9 +8,9 @@ from translate import Translator
 API_URL = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2"
 headers = {"Authorization": "Bearer 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"}
 
+API_URL2 = "https://api-inference.huggingface.co/models/MoritzLaurer/mDeBERTa-v3-base-mnli-xnli"
 
-
-classifier = pipeline("zero-shot-classification", model="MoritzLaurer/mDeBERTa-v3-base-mnli-xnli")
+# classifier = pipeline("zero-shot-classification", model="MoritzLaurer/mDeBERTa-v3-base-mnli-xnli")
 
 with open('my_dict.pickle', 'rb') as file:
     dictionary = pickle.load(file)
@@ -21,7 +21,7 @@ def classify(text,labels):
     return output
 
 
-def query(payload, retries=3, wait_time=5):
+def query(payload, API_URL, retries=3, wait_time=5):
   """
   This function sends a query to the Hugging Face Inference API with retry logic.
   """
@@ -40,47 +40,88 @@ def query(payload, retries=3, wait_time=5):
   return None
 
 
+
+
+
 text = st.text_input('Enter some text:')  # Input field for new text
 
 if text:
 
-    labels = list(dictionary)
-    
-    output = classify(text,labels)
+  labels = list(dictionary)
 
-    output = output["labels"][0]
-
-    labels = list(dictionary[output])
-
-    output2 = classify(text,labels)
-
-    output2 = output2["labels"][0]
+  output = query({
+    "inputs": text,
+    "parameters": {"candidate_labels": labels},
+},API_URL2)
 
 
-    answer = dictionary[output][output2]
 
-    # Create a translator object with specified source and target languages
-    translator = Translator(from_lang='el', to_lang='en')
-    translator2 = Translator(from_lang='en', to_lang='el')
+  # output = classify(text,labels)
 
- 
+  output = output["labels"][0]
 
-# Translate the text from Greek to English
-    answer = translator.translate(answer)
-    text = translator.translate(text)
+  labels = list(dictionary[output])
+
+  output2 = query({
+    "inputs": text,
+    "parameters": {"candidate_labels": labels},
+},API_URL2)
+
+  output2 = output2["labels"][0]
 
 
-    
-    output = query({
-      "inputs": "Based on this info only:" + answer +" ,answer this question, by reasoning step by step:" + text,
-    })
-    
-    if output:
-    
-        translated_text2 = translator2.translate(out[0]['generated_text'])
-        st.text(output)
-    
-        st.text(translated_text2)
-    
-    else:
-        print("Failed to get response from the model.")
+  # output2 = classify(text,labels)
+
+  # output2 = output2["labels"][0]
+
+
+  answer = dictionary[output][output2]
+
+
+  # Create a translator object with specified source and target languages
+  translator = Translator(from_lang='el', to_lang='en')
+  translator2 = Translator(from_lang='en', to_lang='el')
+
+
+  answer_rest = answer
+  answer_translate = ''
+  while len(answer_rest)>500:
+    answer_begin = answer_rest[0:500]
+    answer_rest = answer_rest[500:-1]
+  # Translate the text from Greek to English
+  answer_begin = translator.translate(answer_begin)
+  answer_translate +=answer_begin
+
+  text = translator.translate(text)
+  final_prompt = "Based on this info only: " + answer_translate +" ,answer this question:" + text
+
+  st.text(final_prompt)
+
+  output = query({
+  "inputs": final_prompt,
+  },API_URL)
+
+  if output:
+
+
+    answer_gpt = output[0]['generated_text']
+    print("answer_gpt",answer_gpt)
+    answer_rest = answer_gpt
+    answer_translate = ''
+    while len(answer_rest)>500:
+      answer_begin = answer_rest[0:500]
+      answer_rest = answer_rest[500:-1]
+
+      answer_begin = translator2.translate(answer_begin)
+      answer_translate +=answer_begin
+
+
+    answer_rest = translator2.translate(answer_rest)
+    answer_translate +=answer_rest
+
+    st.text(answer_translate)
+    print("final",answer_translate)
+
+
+  else:
+    print("Failed to get response from the model.")
