@@ -46,6 +46,7 @@ def query(payload, API_URL, retries=3, wait_time=5):
 # Initialize chat history
 if "messages" not in st.session_state:
     st.session_state.messages = []
+    st.session_state.messages.append({"role": "assistant", "content": "Γεια σας! Ρωτήστε με ό,τι θέλετε!"})
 
 # Display chat messages from history on app rerun
 for message in st.session_state.messages:
