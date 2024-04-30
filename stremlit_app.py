@@ -40,12 +40,31 @@ def query(payload, API_URL, retries=3, wait_time=5):
   return None
 
 
+#CHAT HERE
 
 
+# Initialize chat history
+if "messages" not in st.session_state:
+    st.session_state.messages = []
 
-text = st.text_input('Ρωτήστε κάτι:')  # Input field for new text
+# Display chat messages from history on app rerun
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
 
-if text:
+# React to user input
+if prompt := st.chat_input("Ρωτήστε κάτι:"):
+    # Display user message in chat message container
+    st.chat_message("user").markdown(prompt)
+    # Add user message to chat history
+    st.session_state.messages.append({"role": "user", "content": prompt})
+
+    
+
+# text = st.text_input('Ρωτήστε κάτι:')  # Input field for new text
+
+# if text:
+  text = prompt
 
   labels = list(dictionary)
 
@@ -121,7 +140,14 @@ if text:
     answer_rest = translator2.translate(answer_rest)
     answer_translate +=answer_rest
 
-    st.text(answer_translate)
+    # st.text(answer_translate)
+
+    response = answer_translate
+    # Display assistant response in chat message container
+    with st.chat_message("assistant"):
+        st.markdown(response)
+    # Add assistant response to chat history
+    st.session_state.messages.append({"role": "assistant", "content": response})
 
 
   else:
