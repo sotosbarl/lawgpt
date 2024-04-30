@@ -43,7 +43,7 @@ def query(payload, API_URL, retries=3, wait_time=5):
 
 
 
-text = st.text_input('Enter some text:')  # Input field for new text
+text = st.text_input('Ρωτήστε κάτι:')  # Input field for new text
 
 if text:
 
@@ -95,7 +95,6 @@ if text:
   text = translator.translate(text)
   final_prompt = "Based on this info only: " + answer_translate +" ,answer this question:" + text
 
-  st.text(final_prompt)
 
   output = query({
   "inputs": final_prompt,
@@ -105,7 +104,10 @@ if text:
 
 
     answer_gpt = output[0]['generated_text']
-    print("answer_gpt",answer_gpt)
+
+    split_text = answer_gpt.split(final_prompt)
+    answer_gpt = split_text[1]
+
     answer_rest = answer_gpt
     answer_translate = ''
     while len(answer_rest)>500:
@@ -120,7 +122,6 @@ if text:
     answer_translate +=answer_rest
 
     st.text(answer_translate)
-    print("final",answer_translate)
 
 
   else:
